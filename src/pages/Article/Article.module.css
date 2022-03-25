@@ -1,0 +1,31 @@
+.main{
+    width: 1000px;
+    margin: 0 auto;
+    margin-top: 15px;
+}
+
+.main p{
+    font-size: 20px;
+    text-align: justify;
+}
+
+.container{
+    display: flex;
+}
+
+.container img {
+    width: 60px;
+    padding-right: 10px;
+}
+
+.container p{
+    font-size: 14px!important;
+}
+
+.rowTags{
+    display: flex;
+}
+
+.rowTags p{
+    margin-right: 10px;
+}
