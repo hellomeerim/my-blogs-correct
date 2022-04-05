@@ -7,10 +7,10 @@ import {BASE_URL } from '../../constant';
 
 const Article = () => {
     const params = useParams();
+    const postId = parseInt(params.id);
     const [post, setPosts] = useState({});
 
     useEffect(() => {
-            const postId = parseInt(params.id);
             const url = BASE_URL + '/posts/' + postId;
 
             fetch(url)
@@ -40,7 +40,7 @@ const Article = () => {
            
             <img src={post.imageUrl} alt="" /> <br />
             <p>{post.desc} </p> <br /> <br />
-             <Comments/> 
+             <Comments postId={postId}/> 
         </div>
     );
 };

@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import styles from "./Comments.module.css"
 import { BASE_URL, comments } from '../../constant';
+import toast from 'react-hot-toast';
 
-const Comments = () => {
+const Comments = (props) => {
+    console.log(props)
     const [name, setName] = useState('');
     const [comment, setComment] = useState('')
 
@@ -14,25 +16,37 @@ const Comments = () => {
         setComment(event.currentTarget.value);
     }
 
-    const addUsers = () => {
-        const url = BASE_URL + "/users";
-    
-        const user = {
-          name: setName,
-          comment: setComment
+    const addComment = () => {
+
+        const obj = {
+            name: name,
+            comment: comment,
+            postId:props.postId
+            // year/month/day/time:minute
         }
+
+     
+       const url = BASE_URL + "/comments";
+
+       console.log(url)
     
-        const options = {
+       const options = {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify(user)
+          body: JSON.stringify(obj)
         }
     
         fetch(url,options)
-            .then((response) => response.json())
-            .then((data) => console.log(data))
+            .then(response => {
+                if(response.status === 201){
+                    toast.success("Ваш комментарий добавлен");
+                } else {
+                     toast.error("Произошла ошибка")
+                }
+            })
+            // .then((data) => console.log(data))
       }
 
     return (
@@ -42,7 +56,7 @@ const Comments = () => {
                 <img src="https://sevelina.ru/images/uploads/2014/02/287.png" alt="" />
                 <input onChange={getName} className={styles.container1} type="text" placeholder='Введите имя'/>
                 <input onChange={getComment}  type="text" placeholder='Введите текст комментария'/>
-                <button onClick={addUsers}>Оставить комментарий</button> 
+                <button onClick={addComment}>Оставить комментарий</button> 
             </div><br /> <br />
             <h5>122 комментариев {
                  comments.map((item) => {
