@@ -1,12 +1,14 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from "./Comments.module.css"
-import { BASE_URL, comments } from '../../constant';
+import { BASE_URL } from '../../constant';
 import toast from 'react-hot-toast';
+import { getCurrentDate } from '../../helpers';
 
 const Comments = (props) => {
     console.log(props)
     const [name, setName] = useState('');
-    const [comment, setComment] = useState('')
+    const [comment, setComment] = useState('');
+    const [comments,setComments] =useState([]);
 
     const getName = (event) => {
         setName(event.currentTarget.value);
@@ -16,13 +18,28 @@ const Comments = (props) => {
         setComment(event.currentTarget.value);
     }
 
-    const addComment = () => {
+    const getCommentsByPostId = () => {
+        const url = BASE_URL + "/comments?postId=" +props.postId;
+        console.log(url);
 
+        fetch(url)
+        .then(response => {
+            if(response.status === 200){
+                return response.json();
+            } else {
+                toast.error('Загрузка комментариев не удалась,пожалуйста поп попробуйте снова')
+            }
+        })
+        .then(data => setComments(data))
+
+    }
+
+    const addComment = () => {
         const obj = {
             name: name,
             comment: comment,
-            postId:props.postId
-            // year/month/day/time:minute
+            postId:props.postId,
+            date:getCurrentDate()
         }
 
      
@@ -42,12 +59,17 @@ const Comments = (props) => {
             .then(response => {
                 if(response.status === 201){
                     toast.success("Ваш комментарий добавлен");
+                    getCommentsByPostId();
                 } else {
                      toast.error("Произошла ошибка")
                 }
             })
             // .then((data) => console.log(data))
       }
+
+    useEffect(() => {
+       getCommentsByPostId();
+    },[])
 
     return (
         <div className={styles.comments}>
@@ -62,7 +84,7 @@ const Comments = (props) => {
                  comments.map((item) => {
                      return <>
                                 <div key={item.id} className={styles.container}>
-                                    <img src={item.img} alt="" />
+                                    {/* <img src={item.img} alt="" /> */}
                                     <p>{item.name}</p> <br /> 
                                 </div>
                                 <p>{item.comment}</p>

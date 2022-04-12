@@ -1,0 +1,27 @@
+.btn{
+    border-radius: 40px;
+    border: 0;
+    padding: 12px 55px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 147.19%;
+    text-transform: uppercase;
+    color:#FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+
+}
+
+.btn img{
+    margin-left: 5px;
+}
+
+.mainBtn{
+    background: #FF583E;
+}
+
+.secondaryBtn{
+    background: #254F4C;
+}

@@ -1,0 +1,18 @@
+.container{
+    padding: 35px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.goodsCard{
+    width: 300px;
+    border: 2px solid darkblue;
+    margin: 10px;
+    padding: 5px;
+
+}
+
+button{
+    background: white;
+    color: #FF583E;
+}
