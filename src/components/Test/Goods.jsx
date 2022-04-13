@@ -8,7 +8,6 @@ import toast from "react-hot-toast";
 
 const GoodsCard = ({item}) => {
   const [count,setCount] = useState(1);
-  const [cart, setCart] = useState({});
 
   const addCart = () => {
     let cartStorage = localStorage.getItem('cart');
@@ -17,7 +16,7 @@ const GoodsCard = ({item}) => {
     let object = {
       [id]: {
         ...item,
-      count: 1
+        count
     }
     }
 
