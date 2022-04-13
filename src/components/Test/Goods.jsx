@@ -5,9 +5,63 @@ import Button from "../Button/Button";
 import { BASE_URL } from "../../constant";
 import toast from "react-hot-toast";
 
+
+const GoodsCard = ({item}) => {
+  const [count,setCount] = useState(1);
+  const [cart, setCart] = useState({});
+
+  const addCart = () => {
+    let cartStorage = localStorage.getItem('cart');
+
+    const id = item.id;
+    let object = {
+      [id]: {
+        ...item,
+      count: 1
+    }
+    }
+
+    if(cartStorage){
+      cartStorage = JSON.parse(cartStorage);
+      object = {
+        ...object,
+        ...cartStorage
+      }
+    
+    }
+    localStorage.setItem("cart", JSON.stringify(object));
+  };
+
+  const increase = () => {
+    setCount(count+1)
+ }
+
+ const decrease = () => {
+   if(count > 1) {
+     setCount(count-1)
+   }
+ }
+
+  return (<div key={item.id} className={classNames(styles.goodsCard)}>
+      <h1>{item.name}</h1>
+      <p>{item.ing}</p>
+      <h3>
+        <span>{item.price}</span>сом
+      </h3>
+      <button onClick={increase}>+</button>
+      <button onClick={decrease} >-</button>
+      <p><strong>{count}</strong></p>
+      <Button myClass="mainBtn" handleClick={() => addCart(item)}>
+        В корзину
+      </Button>
+    </div>
+  )
+  
+}
+
 const Goods = () => {
   const [goods, setGoods] = useState([]);
-
+  
   const getGoods = () => {
     const url = BASE_URL + "/goods";
 
@@ -27,30 +81,13 @@ const Goods = () => {
   }, []);
 
   return (
-    <div className={classNames(styles.container)}>
-      {goods.map((item) => {
-        return (
-          <div className={classNames(styles.goodsCard)}>
-            <h1>{item.name}</h1>
-            <p>{item.ing}</p>
-            <h3>
-              <span>{item.price}</span>сом
-            </h3>
-            <button>+</button>
-            <button>-</button>
-            <Button
-              myClass="mainBtn"
-              handleClick={() => {
-                alert("worked");
-              }}
-            >
-              В корзину
-            </Button>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
+    <>
+      <a href="">Корзина</a>
+      <div className={classNames(styles.container)}>
+        {goods.map(item => <GoodsCard key={item.id} item={item}/>)}
+      </div>
+    </>
+  )
+}
 
 export default Goods;
