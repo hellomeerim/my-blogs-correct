@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import { tags } from '../../constant';
+import LangContext from '../../context/LangContext';
 
 const Tags = () => {
     const [tag, setTag] = useState('New York');
-
-    console.log(tag);
+    const {lang, setLang} = useContext(LangContext);
 
     const clickTag = () => {
         if (tag === 'New York'){
@@ -19,6 +19,7 @@ const Tags = () => {
         <div>
             <div className="w3-card w3-margin">
                 <div className="w3-container w3-padding">
+                    <h1>{lang}</h1>
                     <h4 onClick={clickTag}>{tag}</h4>
                 </div>
                 <div className="w3-container w3-white">

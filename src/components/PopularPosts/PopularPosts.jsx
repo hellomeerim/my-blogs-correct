@@ -1,12 +1,15 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { popularPosts } from '../../constant';
+import LangContext from '../../context/LangContext';
 
 
 const PopularPosts = () => {
+    const {lang, setLang} = useContext(LangContext)
     return (
         <>
                 <div className="w3-card w3-margin">
                     <div className="w3-container w3-padding">
+                        <h1>{lang}</h1>
                         <h4>Popular Posts</h4>
                     </div>
                     <ul className="w3-ul w3-hoverable w3-white">
